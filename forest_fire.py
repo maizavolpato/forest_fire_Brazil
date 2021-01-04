@@ -30,7 +30,13 @@ total_fire_state = df.groupby(by = ['State'])['Number_fire'].sum().sort_values(a
 print("\n Below we have the total wildfire per State in the last 20 years, in descending order:\n")
 print(total_fire_state)
 
+#usimg the function descrive to undertand about the wildfire's numbers in 20 years
+statistics = df['number'].describe().reset_index().round(3)
+print("\nComputing a summary of statistics about the wildfires in Brazil in the last 20 years:")
+print(statistics)
+
 #the average of wildfire per state in 20 years
+#create two new list one is for state's name and another for fire's numbers
 states = list(df.State.unique())
 
 fires_per_state = []
@@ -38,6 +44,7 @@ for i in states:
     y = df.loc[df['State']==i].Number_fire.sum().round(3)
     fires_per_state.append(y)
 
+#after using for loop to calculate the mean per state in 20 years
 mean_fires_state = []
 for n in fires_per_state:
     n /= 20
@@ -45,6 +52,10 @@ for n in fires_per_state:
    
 
 mean_fires_state_dic = dict(zip(states, mean_fires_state))
-print("\n The average per state in 20 years are:\n", mean_fires_state_dic) 
+print("\n The average per state in 20 years are:\n") 
+
+#create a data frame with the dictionary of avarege fires and state
+dfmean = pd.DataFrame.from_dict(mean_fires_state_dic, orient='index', columns = ['AVG'])
+print(dfmean)
 
 
